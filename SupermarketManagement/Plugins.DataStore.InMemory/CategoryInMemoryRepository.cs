@@ -8,35 +8,28 @@ namespace Plugins.DataStore.InMemory
 {
     public class CategoryInMemoryRepository : ICategoryRepository
     {
-        private List<Category> categories;
+        private HashSet<Category> categories;
+        private int lastCategoryId;
 
         public CategoryInMemoryRepository()
         {
-            //Add some default categories
-
-            categories = new List<Category>()
+            lastCategoryId = 0;
+            categories = new HashSet<Category>(capacity: 3)
             {
-                new Category { CategoryId = 1, Name = "Beverage", Description = "Beverage"},
-                new Category { CategoryId = 2, Name = "Bakery", Description = "Bakery"},
-                new Category { CategoryId = 3, Name = "Meat", Description = "Meat"},
+                new Category { CategoryId = GenerateNextCategoryId(), Name = "Beverage", Description = "Beverage" },
+                new Category { CategoryId = GenerateNextCategoryId(), Name = "Bakery", Description = "Bakery" },
+                new Category { CategoryId = GenerateNextCategoryId(), Name = "Meat", Description = "Meat" },
             };
         }
 
         public void AddCategory(Category category)
         {
-            if (categories.Any(x => x.Name.Equals(category.Name, StringComparison.OrdinalIgnoreCase))) return;
-
-            if (categories != null && categories.Count > 0)
+            if (categories.Any(x => x.Name.Equals(category.Name, StringComparison.OrdinalIgnoreCase)))
             {
-                var maxId = categories.Max(x => x.CategoryId);
-                category.CategoryId = maxId + 1;
+                return;
             }
-            else
-            {
-                category.CategoryId = 1;
-            }
-            
 
+            category.CategoryId = GenerateNextCategoryId();
             categories.Add(category);
         }
 
@@ -57,12 +50,23 @@ namespace Plugins.DataStore.InMemory
 
         public Category GetCategoryById(int categoryId)
         {
-            return categories?.FirstOrDefault(x => x.CategoryId == categoryId);
+            return categories.FirstOrDefault(x => x.CategoryId == categoryId);
         }
 
         public void DeleteCategory(int categoryId)
         {
-            categories?.Remove(GetCategoryById(categoryId));
+            var categoryToDelete = GetCategoryById(categoryId);
+            if (categoryToDelete != null)
+            {
+                categories.Remove(categoryToDelete);
+            }
+        }
+
+        private int GenerateNextCategoryId()
+        {
+            lastCategoryId++;
+            return lastCategoryId;
         }
     }
 }
+
