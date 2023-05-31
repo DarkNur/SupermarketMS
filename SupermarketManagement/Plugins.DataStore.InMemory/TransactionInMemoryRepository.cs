@@ -8,65 +8,66 @@ namespace Plugins.DataStore.InMemory
 {
     public class TransactionInMemoryRepository : ITransactionRepository
     {
-        private List<Transaction> transactions;
+        private Dictionary<int, Transaction> transactions;
+        private int lastTransactionId;
 
         public TransactionInMemoryRepository()
         {
-            transactions = new List<Transaction>();
+            transactions = new Dictionary<int, Transaction>();
+            lastTransactionId = 0;
         }
 
         public IEnumerable<Transaction> Get(string cashierName)
         {
             if (string.IsNullOrWhiteSpace(cashierName))
-                return transactions;
+                return transactions.Values;
             else
-                return transactions.Where(x => string.Equals(x.CashierName, cashierName, StringComparison.OrdinalIgnoreCase));
+                return transactions.Values.Where(x => string.Equals(x.CashierName, cashierName, StringComparison.OrdinalIgnoreCase));
         }
 
         public IEnumerable<Transaction> GetByDay(string cashierName, DateTime date)
         {
             if (string.IsNullOrWhiteSpace(cashierName))
-                return transactions.Where(x => x.TimeStamp.Date == date.Date);
+                return transactions.Values.Where(x => x.TimeStamp.Date == date.Date);
             else
-                return transactions.Where(x => 
+                return transactions.Values.Where(x =>
                     string.Equals(x.CashierName, cashierName, StringComparison.OrdinalIgnoreCase) &&
-                    x.TimeStamp.Date == date.Date);            
+                    x.TimeStamp.Date == date.Date);
         }
 
         public void Save(string cashierName, int productId, string productName, double price, int beforeQty, int soldQty)
         {
-            int transactionId = 0;
-            if (transactions != null && transactions.Count > 0)
-            {
-                int maxId = transactions.Max(x => x.TransactionId);
-                transactionId = maxId + 1;
-            }
-            else
-            {
-                transactionId = 1;
-            }
+            int transactionId = GenerateNextTransactionId();
 
-            transactions.Add(new Transaction
+            var transaction = new Transaction
             {
                 TransactionId = transactionId,
-                 ProductId = productId,
-                 ProductName = productName,
-                 TimeStamp = DateTime.Now,
-                 Price = price,
-                 BeforeQty = beforeQty,
-                 SoldQty = soldQty,                 
-                 CashierName = cashierName
-            });
+                ProductId = productId,
+                ProductName = productName,
+                TimeStamp = DateTime.Now,
+                Price = price,
+                BeforeQty = beforeQty,
+                SoldQty = soldQty,
+                CashierName = cashierName
+            };
+
+            transactions.Add(transactionId, transaction);
         }
 
         public IEnumerable<Transaction> Search(string cashierName, DateTime startDate, DateTime endDate)
         {
             if (string.IsNullOrWhiteSpace(cashierName))
-                return transactions.Where(x => x.TimeStamp >= startDate.Date && x.TimeStamp <=  endDate.Date.AddDays(1).Date);
+                return transactions.Values.Where(x => x.TimeStamp >= startDate.Date && x.TimeStamp <= endDate.Date.AddDays(1).Date);
             else
-                return transactions.Where(x =>
+                return transactions.Values.Where(x =>
                     string.Equals(x.CashierName, cashierName, StringComparison.OrdinalIgnoreCase) &&
                     x.TimeStamp >= startDate.Date && x.TimeStamp <= endDate.Date.AddDays(1).Date);
+        }
+
+        private int GenerateNextTransactionId()
+        {
+            lastTransactionId++;
+            return lastTransactionId;
         }
     }
 }
