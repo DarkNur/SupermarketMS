@@ -67,14 +67,14 @@
     {
         if (string.IsNullOrWhiteSpace(CashierName))
         {
-            errorMessage = "The Cashier's name is missing.";
+            errorMessage = "The Cashier's name is not found.";
             return;
         }
 
         var product = GetProductByIdUseCase.Execute(productToSell.ProductId);
         if (productToSell.Quantity <= 0)
         {
-            errorMessage = "The quanity has to be greater than zero.";
+            errorMessage = "The quantity has to be greater than zero.";
         }
         else if (product.Quantity >= productToSell.Quantity)
         {
