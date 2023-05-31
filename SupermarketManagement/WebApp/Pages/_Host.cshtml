@@ -8,23 +8,59 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Supermarket Management System</title>
     <base href="~/" />
-    <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css" />
-    <link href="css/site.css" rel="stylesheet" />
-    <link href="WebApp.styles.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css">
+    <link href="css/site.css" rel="stylesheet">
+    <link href="WebApp.styles.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+        }
+
+        #blazor-error-ui {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background-color: #f44336;
+            color: white;
+            padding: 8px;
+            font-size: 14px;
+            z-index: 9999;
+        }
+
+            #blazor-error-ui a.reload {
+                color: white;
+                margin-left: 8px;
+                text-decoration: underline;
+            }
+
+            #blazor-error-ui a.dismiss {
+                color: white;
+                position: absolute;
+                top: 4px;
+                right: 4px;
+                font-size: 16px;
+                text-decoration: none;
+            }
+    </style>
 </head>
 <body>
-    <component type="typeof(App)" render-mode="ServerPrerendered" />
+    <component type="typeof(App)" render-mode="ServerPrerendered"></component>
 
     <div id="blazor-error-ui">
         <environment include="Staging,Production">
-            An error has occurred. This application may no longer respond until reloaded.
+            <p>An error has occurred. This application may no longer respond until reloaded.</p>
         </environment>
         <environment include="Development">
-            An unhandled exception has occurred. See browser dev tools for details.
+            <p>An unhandled exception has occurred. See browser dev tools for details.</p>
         </environment>
         <a href="" class="reload">Reload</a>
         <a class="dismiss">🗙</a>
@@ -33,3 +69,4 @@
     <script src="_framework/blazor.server.js"></script>
 </body>
 </html>
+

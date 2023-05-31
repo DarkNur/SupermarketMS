@@ -10,6 +10,32 @@
     <title>@ViewData["Title"] - WebApp</title>
     <link rel="stylesheet" href="~/Identity/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/Identity/css/site.css" />
+
+    <style>
+        /* Custom Styles */
+        .navbar-brand {
+            font-weight: bold;
+        }
+
+        .navbar-toggler {
+            border: none;
+            outline: none;
+        }
+
+        .navbar-toggler-icon {
+            background-image: url('data:image/svg+xml;charset=UTF-8,%3csvg viewBox="0 0 30 30" xmlns="http://www.w3.org/2000/svg"%3e%3cpath stroke="rgba(0, 0, 0, 0.5)" stroke-width="2" stroke-linecap="round" stroke-miterlimit="10" d="M4 7h22M4 15h22M4 23h22"/%3e%3c/svg%3e');
+        }
+
+        .navbar-collapse {
+            justify-content: flex-end;
+        }
+
+        .footer {
+            background-color: #f8f9fa;
+            padding: 1rem;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -31,8 +57,8 @@
                     else
                     {
                         throw new InvalidOperationException("The default Identity UI layout requires a partial view '_LoginPartial' " +
-                            "usually located at '/Pages/_LoginPartial' or at '/Views/Shared/_LoginPartial' to work. Based on your configuration " +
-                            $"we have looked at it in the following locations: {System.Environment.NewLine}{string.Join(System.Environment.NewLine, result.SearchedLocations)}.");
+                        "usually located at '/Pages/_LoginPartial' or at '/Views/Shared/_LoginPartial' to work. Based on your configuration " +
+                        $"we have looked at it in the following locations: {System.Environment.NewLine}{string.Join(System.Environment.NewLine, result.SearchedLocations)}.");
                     }
                 </div>
             </div>

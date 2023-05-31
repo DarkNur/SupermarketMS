@@ -24,12 +24,13 @@ namespace Plugins.DataStore.SQL
         public IEnumerable<Transaction> GetByDay(string cashierName, DateTime date)
         {
             if (string.IsNullOrWhiteSpace(cashierName))
-                return db.Transactions.Where(x => x.TimeStamp.Date == date.Date);
+                return db.Transactions.Where(t => t.TimeStamp.Date == date.Date);
             else
-                return db.Transactions.Where(x =>
-                    EF.Functions.Like(x.CashierName, $"%{cashierName}%") &&
-                    x.TimeStamp.Date == date.Date);
+                return db.Transactions.Where(t =>
+                    EF.Functions.Like(t.CashierName, $"%{cashierName}%") &&
+                    t.TimeStamp.Date == date.Date);
         }
+
 
         public void Save(string cashierName, int productId, string productName, double price, int beforeQty, int soldQty)
         {
