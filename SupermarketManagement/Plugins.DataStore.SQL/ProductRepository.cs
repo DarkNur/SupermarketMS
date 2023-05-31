@@ -22,7 +22,7 @@ namespace Plugins.DataStore.SQL
 
         public void DeleteProduct(int productId)
         {
-            var product = db.Products.Find(productId);
+            var product = db.Products.FirstOrDefault(p => p.ProductId == productId);
             if (product == null) return;
 
             db.Products.Remove(product);
@@ -31,7 +31,7 @@ namespace Plugins.DataStore.SQL
 
         public Product GetProductById(int productId)
         {
-            return db.Products.Find(productId);
+            return db.Products.FirstOrDefault(p => p.ProductId == productId);
         }
 
         public IEnumerable<Product> GetProducts()
@@ -41,12 +41,14 @@ namespace Plugins.DataStore.SQL
 
         public IEnumerable<Product> GetProductsByCategoryId(int categoryId)
         {
-            return db.Products.Where(x => x.CategoryId == categoryId).ToList();
+            return db.Products.Where(p => p.CategoryId == categoryId).ToList();
         }
 
         public void UpdateProduct(Product product)
         {
-            var prod = db.Products.Find(product.ProductId);
+            var prod = db.Products.FirstOrDefault(p => p.ProductId == product.ProductId);
+            if (prod == null) return;
+
             prod.CategoryId = product.CategoryId;
             prod.Name = product.Name;
             prod.Price = product.Price;
@@ -56,3 +58,4 @@ namespace Plugins.DataStore.SQL
         }
     }
 }
+
