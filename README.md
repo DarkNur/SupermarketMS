@@ -25,6 +25,7 @@ Entity Framework, SQL Server и Identity. Оно предназначено дл
 
 ДОСТУП К АДМИНИСТРАТОРУ И КАССИРУ:
 АДМИНИСТРАТОР : логин: admin@mail.com   пароль: 113355ndE#
+
 КАССИР: логин: Iamcashier@mail.com  пароль: 224466ndE#
 
 
