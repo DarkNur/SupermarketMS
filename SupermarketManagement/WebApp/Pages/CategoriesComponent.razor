@@ -5,35 +5,73 @@
 @inject UseCases.IViewCategoriesUseCase ViewCategoryUseCase
 @inject UseCases.IDeleteCategoryUseCase DeleteCategoryUseCase
 
-<h3>Manage Categories</h3>
-<br />
-@if (categories != null)
-{
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Description</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var category in categories)
-            {
+<style>
+    .container {
+        margin-top: 2rem;
+    }
+
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+        .table th,
+        .table td {
+            padding: 0.75rem;
+            border: 1px solid #dee2e6;
+        }
+
+        .table th {
+            background-color: #f8f9fa;
+            font-weight: bold;
+        }
+
+    .btn-add {
+        margin-bottom: 1rem;
+    }
+
+    .btn-edit,
+    .btn-delete {
+        color: #0366d6;
+        padding: 0;
+        font-size: 0.875rem;
+        line-height: 1;
+        text-decoration: underline;
+        cursor: pointer;
+    }
+</style>
+
+<div class="container">
+    <h3>Manage Categories</h3>
+    <br />
+    @if (categories != null)
+    {
+        <table class="table">
+            <thead>
                 <tr>
-                    <td>@category.Name</td>
-                    <td>@category.Description</td>
-                    <td>
-                        <button type="button" @onclick="@(() => EditCategory(category))" class="btn btn-link">Edit</button>
-                        <button type="button" @onclick="@(() => DeleteCategory(category.CategoryId))" class="btn btn-link">Delete</button>
-                    </td>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th></th>
                 </tr>
-            }
-        </tbody>
-    </table>
-}
-<br />
-<button type="button" @onclick="OnClickAddCategory" class="btn btn-primary">Add Category</button>
+            </thead>
+            <tbody>
+                @foreach (var category in categories)
+                {
+                    <tr>
+                        <td>@category.Name</td>
+                        <td>@category.Description</td>
+                        <td>
+                            <button type="button" @onclick="@(() => EditCategory(category))" class="btn-edit">Edit</button>
+                            <button type="button" @onclick="@(() => DeleteCategory(category.CategoryId))" class="btn-delete">Delete</button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    <br />
+    <button type="button" @onclick="OnClickAddCategory" class="btn btn-primary btn-add">Add Category</button>
+</div>
 
 @code {
     private List<Category> categories;

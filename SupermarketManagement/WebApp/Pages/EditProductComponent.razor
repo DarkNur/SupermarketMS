@@ -1,5 +1,5 @@
 ﻿@page "/editproduct/{productId}"
-@attribute [Authorize(Policy ="AdminOnly")]
+@attribute [Authorize(Policy = "AdminOnly")]
 
 @inject NavigationManager NavigationManager
 @inject IAddProductUseCase AddProductUseCase
@@ -11,42 +11,109 @@
 <br />
 @if (product != null)
 {
-<EditForm Model="product" OnValidSubmit="OnValidSumit">
-    <DataAnnotationsValidator></DataAnnotationsValidator>
-    <ValidationSummary></ValidationSummary>
+    <EditForm Model="product" OnValidSubmit="OnValidSubmit">
+        <DataAnnotationsValidator></DataAnnotationsValidator>
+        <ValidationSummary></ValidationSummary>
 
-    <div class="form-group">
-        <label for="name">Name</label>
-        <InputText id="name" @bind-Value="product.Name" class="form-control"></InputText>
-    </div>
+        <div class="form-group">
+            <label for="name">Name</label>
+            <InputText id="name" @bind-Value="product.Name" class="form-control"></InputText>
+        </div>
 
-    <div class="form-group">
-        <label for="category">Category</label>
-        <select id="category" @bind="product.CategoryId" class="form-control">
-            <option selected></option>
-            @foreach (var cat in categories)
-            {
-                <option value="@cat.CategoryId">@cat.Name</option>
-            }
-        </select>
-    </div>
+        <div class="form-group">
+            <label for="category">Category</label>
+            <select id="category" @bind="product.CategoryId" class="form-control">
+                <option selected></option>
+                @foreach (var cat in categories)
+                {
+                    <option value="@cat.CategoryId">@cat.Name</option>
+                }
+            </select>
+        </div>
 
-    <div class="form-group">
-        <label for="price">Price</label>
-        <InputNumber id="price" @bind-Value="product.Price" @bind-Value:format="F2" class="form-control"></InputNumber>
-    </div>
+        <div class="form-group">
+            <label for="price">Price</label>
+            <InputNumber id="price" @bind-Value="product.Price" @bind-Value:format="F2" class="form-control"></InputNumber>
+        </div>
 
-    <div class="form-group">
-        <label for="qty">Quantity</label>
-        <InputNumber id="qty" @bind-Value="product.Quantity" class="form-control"></InputNumber>
-    </div>
+        <div class="form-group">
+            <label for="qty">Quantity</label>
+            <InputNumber id="qty" @bind-Value="product.Quantity" class="form-control"></InputNumber>
+        </div>
 
-    <button type="submit" class="btn btn-primary">Save</button>
-    <button type="button" class="btn btn-primary" @onclick="OnCancel">Cancel</button>
-</EditForm>
-
+        <div class="d-flex justify-content-between">
+            <button type="submit" class="btn btn-primary">Save</button>
+            <button type="button" class="btn btn-secondary" @onclick="OnCancel">Cancel</button>
+        </div>
+    </EditForm>
 }
 
+
+<style>
+    .form-group {
+        margin-bottom: 1rem;
+    }
+
+    .form-control {
+        display: block;
+        width: 100%;
+        padding: 0.375rem 0.75rem;
+        font-size: 1rem;
+        line-height: 1.5;
+        color: #495057;
+        background-color: #fff;
+        background-clip: padding-box;
+        border: 1px solid #ced4da;
+        border-radius: 0.25rem;
+        transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    }
+
+        .form-control:focus {
+            color: #495057;
+            background-color: #fff;
+            border-color: #80bdff;
+            outline: 0;
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+        }
+
+    .btn-primary {
+        color: #fff;
+        background-color: #007bff;
+        border-color: #007bff;
+    }
+
+        .btn-primary:hover {
+            color: #fff;
+            background-color: #0069d9;
+            border-color: #0062cc;
+        }
+
+        .btn-primary:focus {
+            color: #fff;
+            background-color: #0069d9;
+            border-color: #0062cc;
+            box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.5);
+        }
+
+    .btn-secondary {
+        color: #fff;
+        background-color: #6c757d;
+        border-color: #6c757d;
+    }
+
+        .btn-secondary:hover {
+            color: #fff;
+            background-color: #5a6268;
+            border-color: #545b62;
+        }
+
+        .btn-secondary:focus {
+            color: #fff;
+            background-color: #5a6268;
+            border-color: #545b62;
+            box-shadow: 0 0 0 0.2rem rgba(130, 138, 145, 0.5);
+        }
+</style>
 
 @code {
     [Parameter]
@@ -59,28 +126,29 @@
     {
         base.OnInitialized();
         categories = ViewCategoriesUseCase.Execute();
-    }    
+    }
 
     protected override void OnParametersSet()
     {
         base.OnParametersSet();
 
-        if (int.TryParse(this.ProductId, out int iProductId))
+        if (int.TryParse(ProductId, out int iProductId))
         {
             var prod = GetProductByIdUseCase.Execute(iProductId);
-            this.product = new Product { 
-                ProductId = prod.ProductId, 
-                Name = prod.Name,
-                CategoryId = prod.CategoryId,
-                Price = prod.Price,
-                Quantity = prod.Quantity
-            };
+            product = new Product
+                {
+                    ProductId = prod.ProductId,
+                    Name = prod.Name,
+                    CategoryId = prod.CategoryId,
+                    Price = prod.Price,
+                    Quantity = prod.Quantity
+                };
         }
     }
 
-    private void OnValidSumit()
+    private void OnValidSubmit()
     {
-        EditProductUseCase.Execute(this.product);
+        EditProductUseCase.Execute(product);
         NavigationManager.NavigateTo("/products");
     }
 
@@ -88,5 +156,4 @@
     {
         NavigationManager.NavigateTo("/products");
     }
-
 }
