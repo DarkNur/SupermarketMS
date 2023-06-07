@@ -1,39 +1,48 @@
 @import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
 
+/* Global Styles */
 html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
 a, .btn-link {
-    color: #0366d6;
+    color: #007bff; /* Blue */
+    text-decoration: none;
 }
 
 .btn-primary {
     color: #fff;
-    background-color: #1b6ec2;
-    border-color: #1861ac;
+    background-color: #28a745; /* Green */
+    border-color: #28a745; /* Green */
+    transition: background-color 0.3s ease-in-out;
 }
+
+    .btn-primary:hover {
+        background-color: #218838; /* Darker green */
+    }
 
 .content {
     padding-top: 1.1rem;
 }
 
+/* Form Validation Styles */
 .valid.modified:not([type=checkbox]) {
-    outline: 1px solid #26b050;
+    outline: 1px solid #28a745; /* Green */
+    transition: outline-color 0.3s ease-in-out;
 }
 
 .invalid {
-    outline: 1px solid red;
+    outline: 1px solid #dc3545; /* Red */
+    transition: outline-color 0.3s ease-in-out;
 }
 
 .validation-message {
-    color: red;
+    color: #dc3545; /* Red */
 }
 
-
-
+/* Error UI Styles */
 #blazor-error-ui {
-    background: lightyellow;
+    background: #fff3cd; /* Yellow */
     bottom: 0;
     box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.2);
     display: none;
@@ -49,14 +58,21 @@ a, .btn-link {
         position: absolute;
         right: 0.75rem;
         top: 0.5rem;
+        transition: color 0.3s ease-in-out;
     }
 
+        #blazor-error-ui .dismiss:hover {
+            color: #dc3545; /* Red */
+        }
+
+/* Print Styles */
 @media print {
     body * {
         visibility: hidden;
     }
 
-    #printarea, #printarea * {
+    #printarea,
+    #printarea * {
         visibility: visible;
     }
 
@@ -66,4 +82,3 @@ a, .btn-link {
         top: 0;
     }
 }
-
