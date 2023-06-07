@@ -1,5 +1,5 @@
 ﻿@page "/addproduct"
-@attribute [Authorize(Policy ="AdminOnly")]
+@attribute [Authorize(Policy = "AdminOnly")]
 
 @inject NavigationManager NavigationManager
 @inject IAddProductUseCase AddProductUseCase
@@ -9,40 +9,41 @@
 <br />
 @if (product != null)
 {
-<EditForm Model="product" OnValidSubmit="OnValidSumit">
-    <DataAnnotationsValidator></DataAnnotationsValidator>
-    <ValidationSummary></ValidationSummary>
+    <EditForm Model="product" OnValidSubmit="OnValidSubmit">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
 
-    <div class="form-group">
-        <label for="name">Name</label>
-        <InputText id="name" @bind-Value="product.Name" class="form-control"></InputText>
-    </div>
+        <div class="form-group">
+            <label for="name">Name</label>
+            <InputText id="name" @bind-Value="product.Name" class="form-control" />
+        </div>
 
-    <div class="form-group">
-        <label for="category">Category</label>
-        <select id="category" @bind="product.CategoryId" class="form-control">
-            <option selected></option>
-            @foreach (var cat in categories)
-            {
-                <option value="@cat.CategoryId">@cat.Name</option>
-            }
-        </select>
-    </div>
+        <div class="form-group">
+            <label for="category">Category</label>
+            <select id="category" @bind="product.CategoryId" class="form-control">
+                <option value="">Select category...</option>
+                @foreach (var cat in categories)
+                {
+                    <option value="@cat.CategoryId">@cat.Name</option>
+                }
+            </select>
+        </div>
 
-    <div class="form-group">
-        <label for="price">Price</label>
-        <InputNumber id="price" @bind-Value="product.Price" @bind-Value:format="F2" class="form-control"></InputNumber>
-    </div>
+        <div class="form-group">
+            <label for="price">Price</label>
+            <InputNumber id="price" @bind-Value="product.Price" class="form-control" />
+        </div>
 
-    <div class="form-group">
-        <label for="qty">Quantity</label>
-        <InputNumber id="qty" @bind-Value="product.Quantity" class="form-control"></InputNumber>
-    </div>
+        <div class="form-group">
+            <label for="qty">Quantity</label>
+            <InputNumber id="qty" @bind-Value="product.Quantity" class="form-control" />
+        </div>
 
-    <button type="submit" class="btn btn-primary">Save</button>
-    <button type="button" class="btn btn-primary" @onclick="OnCancel">Cancel</button>
-</EditForm>
-
+        <div class="d-flex justify-content-between">
+            <button type="submit" class="btn btn-primary">Save</button>
+            <button type="button" class="btn btn-secondary" @onclick="OnCancel">Cancel</button>
+        </div>
+    </EditForm>
 }
 
 
@@ -59,7 +60,7 @@
         categories = ViewCategoriesUseCase.Execute();
     }
 
-    private void OnValidSumit()
+    private void OnValidSubmit()
     {
         AddProductUseCase.Execute(product);
         NavigationManager.NavigateTo("/products");
