@@ -4,6 +4,7 @@ namespace CoreBusiness
 {
     public class Product
     {
+        [Key]
         public int ProductId { get; set; }
         [Required]
         public int? CategoryId { get; set; }

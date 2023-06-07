@@ -3,13 +3,58 @@
 
 <AuthorizeView>
     <Authorized>
-        <a class="py-2 d-none d-md-inline-block" href="Identity/Account/Manage"> @context.User.Identity.Name!</a>
-        <form class="py-2 d-none d-md-inline-block" action="/Identity/Account/Logout?returnUrl=%2F" method="post">
-            <button type="submit" class="nav-link btn btn-link">Log out</button>
-        </form>
+        <div class="user-info">
+            <span class="user-name">Welcome, @context.User.Identity.Name!</span>
+            <form class="logout-form" action="/Identity/Account/Logout?returnUrl=%2F" method="post">
+                <button type="submit" class="logout-button btn btn-link">Log out</button>
+            </form>
+        </div>
     </Authorized>
     <NotAuthorized>
-        <a class="py-2 d-none d-md-inline-block" href="Identity/Account/Register">Register</a>
-        <a class="py-2 d-none d-md-inline-block" href="Identity/Account/Login">Login</a>
+        <div class="auth-links">
+            <a class="register-link" href="Identity/Account/Register">Register</a>
+            <a class="login-link" href="Identity/Account/Login">Login</a>
+        </div>
     </NotAuthorized>
 </AuthorizeView>
+
+<style>
+    .user-info {
+        display: flex;
+        align-items: center;
+        margin-right: 15px;
+    }
+
+    .user-name {
+        margin-right: 10px;
+    }
+
+    .logout-form {
+        margin: 0;
+        padding: 0;
+    }
+
+    .logout-button {
+        color: #007bff;
+        padding: 0;
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+        font-size: 1rem;
+    }
+
+        .logout-button:hover {
+            text-decoration: underline;
+        }
+
+    .auth-links {
+        display: flex;
+        align-items: center;
+        margin-right: 15px;
+    }
+
+    .register-link,
+    .login-link {
+        margin-right: 10px;
+    }
+</style>

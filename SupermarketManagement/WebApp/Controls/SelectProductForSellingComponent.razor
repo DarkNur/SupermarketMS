@@ -1,4 +1,5 @@
-﻿@inject IViewCategoriesUseCase ViewCategoriesUseCase
+﻿@using System.ComponentModel.DataAnnotations;
+@inject IViewCategoriesUseCase ViewCategoriesUseCase
 @inject IViewProductsByCategoryId ViewProductsByCategoryId
 
 <div class="form-group">
@@ -46,7 +47,9 @@
     [Parameter]
     public EventCallback<Product> OnProductSelected{ get; set; }
 
+    
     private int selectedCategoryId;
+    
     private int SelectedCategoryId {
         get
         {
