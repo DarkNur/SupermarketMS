@@ -74,7 +74,7 @@
         var product = GetProductByIdUseCase.Execute(productToSell.ProductId);
         if (productToSell.Quantity <= 0)
         {
-            errorMessage = "The quantity has to be greater than zero.";
+            errorMessage = "The quantity has to be greater than zero."; 
         }
         else if (product.Quantity >= productToSell.Quantity)
         {

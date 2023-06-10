@@ -40,6 +40,8 @@ namespace WebApp
             });
 
             //Dependency Injection for In-Memory Data Store
+            //This is needed when you are not connected to Database , and want to test the project
+
             //services.AddScoped<ICategoryRepository, CategoryInMemoryRepository>();
             //services.AddScoped<IProductRepository, ProductInMemoryRepository>();
             //services.AddScoped<ITransactionRepository, TransactionInMemoryRepository>();

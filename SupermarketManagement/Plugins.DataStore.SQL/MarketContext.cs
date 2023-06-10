@@ -20,7 +20,7 @@ namespace Plugins.DataStore.SQL
                 .WithOne(p => p.Category)
                 .HasForeignKey(p => p.CategoryId);
 
-            // seeding some data
+            // seeding 
             modelBuilder.Entity<Category>().HasData(
                     new Category { CategoryId = 1, Name = "Beverage", Description = "Beverage" },
                     new Category { CategoryId = 2, Name = "Bakery", Description = "Bakery" },
